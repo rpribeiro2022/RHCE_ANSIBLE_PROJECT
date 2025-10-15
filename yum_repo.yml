@@ -1,0 +1,23 @@
+---
+- name: configure system to use default repositories
+  hosts: all
+  tasks:
+  - name: Base Repo
+    yum_repository:
+      file: EX294_BASE
+      name: EX294_BASE
+      description: "EX294 base software"
+      baseurl: http://dl.rockylinux.org/$contentdir/$releasever/BaseOS/$basearch/os/
+      gpgcheck: yes
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-10
+      enabled: yes
+  - name: Stream Repo
+    yum_repository:
+      file: EX294_STREAM
+      name: EX294_STREAM
+      description: "EX294 stream software"
+      baseurl: http://dl.rockylinux.org/$contentdir/$releasever/AppStream/$basearch/os/
+      gpgcheck: yes
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-10
+      enabled: yes
+

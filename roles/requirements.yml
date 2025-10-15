@@ -1,0 +1,5 @@
+---
+- src: http://webserver:8080/balancer.tgz
+  name: balancer
+- src: http://webserver:8080/phpinfo.tgz
+  name: phpinfo

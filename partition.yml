@@ -1,0 +1,41 @@
+---
+- name: create partition
+  hosts: all
+  tasks:
+  - name: check disk availability
+    block:
+    - name: Check if disk exists
+      ansible.builtin.debug:
+        msg: "The disk does not exists"
+      when: "'sdb' not in ansible_devices"
+    - name: create 1200M
+      community.general.parted:
+        device: /dev/sdb
+        number: 1
+        part_end: 1200MiB
+        state: present
+      when: "'sdb' in ansible_devices"
+    rescue:
+    - name: Could not create a disk partition
+      ansible.builtin.debug:
+        msg: "The Cloud does not create a disk partition at that size"
+      when: "'sdb1' not in ansible_devices.sdb"
+    - name: create 800M
+      community.general.parted:
+        device: /dev/sdb
+        number: 1
+        part_end: 800MiB
+        state: present
+    always:
+    - name: create ext4 fs
+      community.general.filesystem:
+        fstype: ext4
+        dev: /dev/sdb1
+      when: "'sdb' in ansible_devices"
+    - name: mount filesystem
+      ansible.posix.mount:
+        path: /srv
+        src: /dev/sdb1
+        fstype: ext4
+        state: mounted
+      when: inventory_hostname in groups.prod

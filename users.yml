@@ -1,0 +1,40 @@
+---
+- name: Create user 1
+  hosts: dev, test
+  vars_files:
+  - /home/rodolfo/ansible/locker.yml
+  - /home/rodolfo/ansible/user_list.yml
+  tasks:
+  - name: Add group
+    ansible.builtin.group:
+      name: devops
+      state: present
+  - name: Add user
+    ansible.builtin.user:
+      name: "{{ item.name }}"
+      group: devops
+      uid: "{{ item.uid }}"
+      password: "{{ pw_developer | password_hash('sha512') }}"
+      password_expire_max: "{{ item.password_expire_max }}"
+    loop: "{{ users }}"
+    when: item.job == "developer"
+- name: Create user 2
+  hosts: prod
+  vars_files:
+  - /home/rodolfo/ansible/locker.yml
+  - /home/rodolfo/ansible/user_list.yml
+  tasks:
+  - name: Add group
+    ansible.builtin.group:
+      name: opsmgr
+      state: present
+  - name: Add user
+    ansible.builtin.user:
+      name: "{{ item.name }}"
+      group: opsmgr
+      uid: "{{ item.uid }}"
+      password: "{{ pw_manager | password_hash('sha512') }}"
+      password_expire_max: "{{ item.password_expire_max }}"
+    loop: "{{ users }}"
+    when: item.job == "manager"
+

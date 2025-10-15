@@ -1,0 +1,9 @@
+---
+- name: role timesync
+  hosts: all
+  vars:
+    timesync_ntp_servers:
+    - hostname: gps.ntp.br
+      iburst: yes
+  roles:
+  - timesync

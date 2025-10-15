@@ -1,0 +1,26 @@
+---
+- name: create web content directory
+  hosts: dev
+  roles:
+  - apache
+  tasks:
+  - name: Ensure webdev groups exists
+    ansible.builtin.group:
+      name: webdev
+      state: present
+  - name: Create directory
+    ansible.builtin.file:
+      path: /webdev
+      group: webdev
+      state: directory
+      mode: "2775"
+  - name: Create link
+    ansible.builtin.file:
+      src: /webdev
+      dest: /var/www/html/webdev
+      state: link
+  - name: copy a file content
+    ansible.builtin.copy:
+      content: "Development"
+      dest: /webdev/index.html
+      setype: httpd_sys_content_t
