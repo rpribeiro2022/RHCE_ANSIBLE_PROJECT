@@ -16,7 +16,7 @@ O objetivo principal deste projeto é demonstrar proficiência nas áreas de aut
 
     Configuração do Nó de Controle (Control Node): Instalação, ansible.cfg, e gerenciamento de inventário.
 
-    Criação de Plays e Playbooks: Uso de módulos comuns (yum, dnf, package, service, firewalld, user, filesystem, etc.), manipulação de variáveis, condicionais e tratamento de erros.
+    Criação de Plays e Playbooks: Uso de módulos comuns (yum, copy, systemd, debug, firewalld, user, filesystem, etc.), manipulação de variáveis, condicionais e tratamento de erros.
 
     Utilização de Roles e Collections: Estruturação de Playbooks complexos usando a metodologia Role.
 
