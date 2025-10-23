@@ -67,10 +67,15 @@ Bash
 🚀 Execução dos Playbooks
 
 Para executar os Playbooks do projeto, utilize o arquivo de configuração e o inventário corretos:
+
 Descrição da Tarefa	Comando de Execução
+
 Executar o Playbook Principal (Orquestração de todas as roles)	ansible-playbook playbooks/main.yml -i inventory/hosts.ini
+
 Executar uma Role Específica (Ex: Configurar Firewall)	ansible-playbook playbooks/main.yml -i inventory/hosts.ini --limit webserver
+
 Usar o Vault (se houver dados sensíveis)	ansible-playbook playbooks/security.yml -i inventory/hosts.ini --ask-vault-pass
+
 Teste de Idempotência/Modo Check	ansible-playbook playbooks/main.yml -i inventory/hosts.ini --check
 
 🔑 Segurança (Ansible Vault)
